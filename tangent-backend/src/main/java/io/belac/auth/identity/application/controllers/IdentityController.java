@@ -1,4 +1,4 @@
-package io.belac.auth.identity.infrastructure.controllers;
+package io.belac.auth.identity.application.controllers;
 
 import com.fasterxml.uuid.Generators;
 import com.github.javafaker.Faker;
@@ -11,18 +11,24 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("/auth/identity")
 public class IdentityController {
+
+    Logger logger = LoggerFactory.getLogger(IdentityController.class);
 
     @POST
     @Path("/user")
     @Transactional
     public Response creatUser(CreateUserIdentity createUser) {
         var faker = new Faker();
+        var pass = faker.book().title();
+        logger.info(pass);
         var user = new UserIdentityEntity();
         user.id = Generators.timeBasedEpochGenerator().generate().toString();
-        user.email = user.email = createUser.email();
+        user.email = createUser.email();
         user.password = faker.book().title();
         user.rememberMe = "";
         user.username = StringUtils.substringBefore(user.email, "@");

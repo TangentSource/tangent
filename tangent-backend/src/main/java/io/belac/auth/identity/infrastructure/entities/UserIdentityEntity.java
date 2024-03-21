@@ -9,7 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-@Entity(name = "auth_identity_providers")
+@Entity(name = "auth_user_identity")
 public class UserIdentityEntity extends PanacheEntityBase {
 
     @Id
