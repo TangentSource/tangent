@@ -2,3 +2,4 @@
 .vscode/settings.json
 /application/target
 /core/target
+/.idea/
