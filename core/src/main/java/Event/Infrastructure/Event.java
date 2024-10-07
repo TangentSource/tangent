@@ -20,6 +20,6 @@ public class Event extends PanacheEntityBase {
     String data;
     String messageGroup;
     List<EventContextDto> contexts;
-    
+
 
 }
