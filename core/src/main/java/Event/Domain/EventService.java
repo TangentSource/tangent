@@ -1,12 +1,17 @@
 package Event.Domain;
 
 import Common.Exceptions.ExistsException;
-import Event.Domain.Dtos.EventDto;
+import Common.IdGenerator;
+import Event.Domain.Commands.CreateEventCommand;
+import Event.Domain.Dtos.EventContextDto;
 import Event.Infrastructure.EventRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+
+import java.util.ArrayList;
+
 /**
- * This domain is so simple that we will forgo frich entities for anemic ones.
+ * This domain is so simple that we will forgo rich entities for anemic ones.
  */
 @ApplicationScoped
 public class EventService {
@@ -14,12 +19,38 @@ public class EventService {
     @Inject
     EventRepository eventRepository;
 
-    public void create(EventDto eventDto) throws ExistsException {
+    @Inject
+    IdGenerator idGenerator;
+
+    public String create(CreateEventCommand createEventCommand) throws ExistsException {
         //Ensure the event ID does not exist
-        if (eventRepository.findByIdOptional(eventDto.id()).isPresent()){
-            throw new ExistsException(EventEntity.class.getCanonicalName(), eventDto.id());
+        if (createEventCommand.deduplicationId() != null) {
+            var event = eventRepository.findByDeduplicationId(createEventCommand.deduplicationId());
+                if (event.isPresent()) {
+                    return event.get().id;
+                }
+            }
+        var id = idGenerator.getTsidString();
+        var contextEntities = new ArrayList<EventContextEntity>();
+        for (EventContextDto context: createEventCommand.contexts()){
+            contextEntities.add(new EventContextEntity(id, context.key(), context.val()));
         }
-        eventRepository.persist(new EventEntity());
+
+        eventRepository.persist(
+                new EventEntity(
+                        id,
+                        createEventCommand.type(),
+                        createEventCommand.specVersion(),
+                        createEventCommand.source(),
+                        createEventCommand.subject(),
+                        createEventCommand.time(),
+                        createEventCommand.dataContentType(),
+                        createEventCommand.data(),
+                        createEventCommand.messageGroup(),
+                        contextEntities
+                )
+        );
+        return id;
     }
 
 }
