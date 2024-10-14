@@ -8,7 +8,6 @@ import java.util.List;
 
 @RegisterForReflection
 public record CreateEventCommand(
-    String deduplicationId,
     String type,
     String specVersion,     //e.g. 1.0
     String source,
@@ -17,6 +16,7 @@ public record CreateEventCommand(
     String dataContentType,
     String data,
     String messageGroup,
+    String deduplicationId,
     List<EventContextDto> contexts
 ) {
 }

@@ -8,6 +8,7 @@ import Event.Infrastructure.EventRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
 /**
@@ -33,7 +34,15 @@ public class EventService {
         var id = idGenerator.getTsidString();
         var contextEntities = new ArrayList<EventContextEntity>();
         for (EventContextDto context: createEventCommand.contexts()){
-            contextEntities.add(new EventContextEntity(id, context.key(), context.val()));
+            contextEntities.add(
+                    new EventContextEntity
+                            (idGenerator.getTsidString(),
+                                    id,
+                                    context.key(),
+                                    context.val(),
+                                    OffsetDateTime.now()
+                            )
+            );
         }
 
         eventRepository.persist(
@@ -47,6 +56,7 @@ public class EventService {
                         createEventCommand.dataContentType(),
                         createEventCommand.data(),
                         createEventCommand.messageGroup(),
+                        OffsetDateTime.now(),
                         contextEntities
                 )
         );

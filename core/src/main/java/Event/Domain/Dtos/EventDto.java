@@ -19,6 +19,7 @@ public record EventDto(
         String dataContentType,
         String data,
         String messageGroup,
+        String deduplicationId,
         List<EventContextDto> contexts  //Allows attaching context e.g. a Transport Order has a related Sales Order
 
 ) {

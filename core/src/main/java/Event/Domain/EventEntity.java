@@ -6,13 +6,15 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 
-@Entity
+@Entity(name = "tangent_events")
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventEntity extends PanacheEntityBase {
@@ -27,6 +29,9 @@ public class EventEntity extends PanacheEntityBase {
     String dataContentType;
     String data;
     String messageGroup;
+    @CreationTimestamp
+    OffsetDateTime createdAt;
+    String deduplicationId;
 
     @OneToMany
     List<EventContextEntity> contexts;

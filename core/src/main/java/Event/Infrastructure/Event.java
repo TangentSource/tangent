@@ -28,6 +28,7 @@ public class Event extends PanacheEntityBase {
     String dataContentType;
     String data;
     String messageGroup;
+    String deduplicationId;
     @OneToMany
     List<EventContextEntity> contexts;
 

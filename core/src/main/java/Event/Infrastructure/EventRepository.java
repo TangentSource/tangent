@@ -9,8 +9,8 @@ import java.util.Optional;
 @ApplicationScoped
 public class EventRepository implements PanacheRepositoryBase<EventEntity, String> {
 
-    public Optional<EventEntity> findByDeduplicationId(String eventDeduplicationId){
-        return find("deduplication_id", eventDeduplicationId).firstResultOptional();
+    public Optional<EventEntity> findByDeduplicationId(String deduplicationId){
+        return find("deduplicationId", deduplicationId).firstResultOptional();
     }
 
 }
