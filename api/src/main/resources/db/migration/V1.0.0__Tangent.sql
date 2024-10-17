@@ -11,10 +11,11 @@ CREATE TABLE tangent_events
     message_group     VARCHAR,
     deduplication_id     VARCHAR,
     created_at TIMESTAMPTZ
-) PARTITION BY RANGE (created_at);
+);
+-- PARTITION BY RANGE (created_at);
 
-CREATE INDEX idx_created_at ON tangent_events (created_at);
-CREATE INDEX idx_deduplication_id ON tangent_events (deduplication_id);
+CREATE INDEX idx_tangent_events_created_at ON tangent_events (created_at);
+CREATE INDEX idx_tangent_events_deduplication_id ON tangent_events (deduplication_id);
 
 
 CREATE TABLE tangent_event_contexts
@@ -23,6 +24,8 @@ CREATE TABLE tangent_event_contexts
     key     VARCHAR,
     value   VARCHAR,
     created_at TIMESTAMPTZ
-) PARTITION BY RANGE (created_at);
+);
+-- PARTITION BY RANGE (created_at);
 
-CREATE INDEX idx_created_at ON tangent_events (created_at);
+CREATE INDEX idx_tangent_event_contexts_created_at ON tangent_event_contexts (created_at);
+CREATE INDEX idx_tangent_event_contexts_key ON tangent_event_contexts (key);

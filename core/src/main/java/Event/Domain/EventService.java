@@ -57,6 +57,7 @@ public class EventService {
                         createEventCommand.data(),
                         createEventCommand.messageGroup(),
                         OffsetDateTime.now(),
+                        createEventCommand.deduplicationId(),
                         contextEntities
                 )
         );
