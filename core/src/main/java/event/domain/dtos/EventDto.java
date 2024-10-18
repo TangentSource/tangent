@@ -1,4 +1,4 @@
-package Event.Domain.Dtos;
+package event.domain.dtos;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 

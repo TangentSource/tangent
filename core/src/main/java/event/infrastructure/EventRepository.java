@@ -1,6 +1,6 @@
-package Event.Infrastructure;
+package event.infrastructure;
 
-import Event.Domain.EventEntity;
+import event.domain.EventEntity;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
 

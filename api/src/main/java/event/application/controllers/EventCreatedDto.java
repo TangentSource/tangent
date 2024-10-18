@@ -1,4 +1,4 @@
-package Event.Application.Controllers;
+package event.application.controllers;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;

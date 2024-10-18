@@ -1,4 +1,4 @@
-package Common.Exceptions;
+package common.exceptions;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 

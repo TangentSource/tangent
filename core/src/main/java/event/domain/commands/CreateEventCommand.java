@@ -1,6 +1,6 @@
-package Event.Domain.Commands;
+package event.domain.commands;
 
-import Event.Domain.Dtos.EventContextDto;
+import event.domain.dtos.EventContextDto;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 import java.time.OffsetDateTime;

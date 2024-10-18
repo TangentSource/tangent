@@ -1,10 +1,11 @@
-package Event.Domain;
+package event.domain;
 
-import Common.Exceptions.ExistsException;
-import Common.IdGenerator;
-import Event.Domain.Commands.CreateEventCommand;
-import Event.Domain.Dtos.EventContextDto;
-import Event.Infrastructure.EventRepository;
+import common.exceptions.ExistsException;
+import common.IdGenerator;
+import event.domain.commands.CreateEventCommand;
+import event.domain.dtos.EventContextDto;
+import event.infrastructure.EventContextRepository;
+import event.infrastructure.EventRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -19,6 +20,9 @@ public class EventService {
 
     @Inject
     EventRepository eventRepository;
+
+    @Inject
+    EventContextRepository eventContextRepository;
 
     @Inject
     IdGenerator idGenerator;
@@ -61,6 +65,7 @@ public class EventService {
                         contextEntities
                 )
         );
+        eventContextRepository.persist(contextEntities);
         return id;
     }
 

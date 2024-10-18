@@ -1,4 +1,4 @@
-package Common;
+package common;
 
 import com.github.f4b6a3.tsid.Tsid;
 import com.github.f4b6a3.tsid.TsidFactory;

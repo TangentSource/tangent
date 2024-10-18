@@ -1,11 +1,11 @@
-package Event.Domain;
+package event.domain;
 
+import event.domain.dtos.EventContextDto;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.OffsetDateTime;
 
@@ -19,6 +19,13 @@ public class EventContextEntity extends PanacheEntityBase {
         String eventId;
         String key;
         String value;
-        @CreationTimestamp
         OffsetDateTime createdAt;
+
+
+        public EventContextDto toDto() {
+            return new EventContextDto(
+                    key,
+                    value
+            );
+        }
 }

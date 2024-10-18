@@ -1,17 +1,16 @@
-package Event.Domain;
+package event.domain;
 
-import Event.Domain.Dtos.EventContextDto;
-import Event.Domain.Dtos.EventDto;
+import event.domain.dtos.EventContextDto;
+import event.domain.dtos.EventDto;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "tangent_events")
@@ -29,13 +28,32 @@ public class EventEntity extends PanacheEntityBase {
     String dataContentType;
     String data;
     String messageGroup;
-    @CreationTimestamp
     OffsetDateTime createdAt;
     String deduplicationId;
 
-    @OneToMany
+    @OneToMany(mappedBy = "eventId")
     List<EventContextEntity> contexts;
 
+
+    public EventDto toDto() {
+        var contexts = new ArrayList<EventContextDto>();
+        for (EventContextEntity context : this.contexts) {
+            contexts.add(context.toDto());
+        }
+        return new EventDto(
+                id,
+                type,
+                specVersion,
+                source,
+                subject,
+                time,
+                dataContentType,
+                data,
+                messageGroup,
+                deduplicationId,
+                contexts
+        );
+    }
 
 
 }
