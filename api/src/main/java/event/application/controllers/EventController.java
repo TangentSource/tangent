@@ -49,8 +49,8 @@ public class EventController {
     @GET
     @Path("/create-id")
     @RunOnVirtualThread
-    public String createId() {
-        return idGenerator.getTsidString();
+    public Long createId() {
+        return idGenerator.getTsidLong();
     }
 
     @GET

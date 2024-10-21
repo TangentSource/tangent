@@ -21,4 +21,8 @@ public class IdGenerator {
         return getId().toString();
     }
 
+    public Long getTsidLong(){
+        return getId().toLong();
+    }
+
 }
