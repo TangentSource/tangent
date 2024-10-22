@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 public class SubscriptionEventTypeEntity extends PanacheEntityBase {
     @Id
     Long id;
-
     Long subscriptionId;
     String eventType;
 
