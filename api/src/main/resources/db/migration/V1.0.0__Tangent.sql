@@ -1,6 +1,6 @@
 CREATE TABLE tangent_events
 (
-    id                VARCHAR PRIMARY KEY,
+    id                BIGINT CHECK (id >= 0) PRIMARY KEY,
     type              VARCHAR NOT NULL,
     spec_version      VARCHAR NOT NULL,
     source            VARCHAR,
@@ -20,10 +20,10 @@ CREATE INDEX idx_tangent_events_deduplication_id ON tangent_events (deduplicatio
 
 CREATE TABLE tangent_event_contexts
 (
-    id                VARCHAR PRIMARY KEY,
+    id                 BIGINT CHECK (id >= 0) PRIMARY KEY,
     key     VARCHAR,
     value   VARCHAR,
-    event_id VARCHAR,
+    event_id  BIGINT CHECK (id >= 0),
     created_at TIMESTAMPTZ
 );
 -- PARTITION BY RANGE (created_at);

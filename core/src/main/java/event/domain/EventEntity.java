@@ -4,6 +4,7 @@ import event.domain.dtos.EventContextDto;
 import event.domain.dtos.EventDto;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.List;
 public class EventEntity extends PanacheEntityBase {
 
     @Id
-    String id;
+    Long id;
     String type;
     String specVersion;    //e.g. 1.0
     String source;
@@ -31,7 +32,7 @@ public class EventEntity extends PanacheEntityBase {
     OffsetDateTime createdAt;
     String deduplicationId;
 
-    @OneToMany(mappedBy = "eventId")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "eventId")
     List<EventContextEntity> contexts;
 
 

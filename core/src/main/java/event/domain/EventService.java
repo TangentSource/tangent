@@ -4,6 +4,7 @@ import common.exceptions.ExistsException;
 import common.IdGenerator;
 import event.domain.commands.CreateEventCommand;
 import event.domain.dtos.EventContextDto;
+import event.domain.dtos.EventDto;
 import event.infrastructure.EventContextRepository;
 import event.infrastructure.EventRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -27,46 +28,44 @@ public class EventService {
     @Inject
     IdGenerator idGenerator;
 
-    public String create(CreateEventCommand createEventCommand) throws ExistsException {
+    public EventDto create(CreateEventCommand createEventCommand) throws ExistsException {
         //Ensure the event ID does not exist
         if (createEventCommand.deduplicationId() != null) {
             var event = eventRepository.findByDeduplicationId(createEventCommand.deduplicationId());
-                if (event.isPresent()) {
-                    return event.get().id;
-                }
+            if (event.isPresent()) {
+                return event.get().toDto();
             }
-        var id = idGenerator.getTsidString();
+        }
+        var id = idGenerator.getTsidLong();
         var contextEntities = new ArrayList<EventContextEntity>();
-        for (EventContextDto context: createEventCommand.contexts()){
+        for (EventContextDto context : createEventCommand.contexts()) {
             contextEntities.add(
-                    new EventContextEntity
-                            (idGenerator.getTsidString(),
-                                    id,
-                                    context.key(),
-                                    context.val(),
-                                    OffsetDateTime.now()
-                            )
+                    new EventContextEntity(
+                            idGenerator.getTsidLong(),
+                            id,
+                            context.key(),
+                            context.val(),
+                            OffsetDateTime.now()
+                    )
             );
         }
-
-        eventRepository.persist(
-                new EventEntity(
-                        id,
-                        createEventCommand.type(),
-                        createEventCommand.specVersion(),
-                        createEventCommand.source(),
-                        createEventCommand.subject(),
-                        createEventCommand.time(),
-                        createEventCommand.dataContentType(),
-                        createEventCommand.data(),
-                        createEventCommand.messageGroup(),
-                        OffsetDateTime.now(),
-                        createEventCommand.deduplicationId(),
-                        contextEntities
-                )
+        var event = new EventEntity(
+                id,
+                createEventCommand.type(),
+                createEventCommand.specVersion(),
+                createEventCommand.source(),
+                createEventCommand.subject(),
+                createEventCommand.time(),
+                createEventCommand.dataContentType(),
+                createEventCommand.data(),
+                createEventCommand.messageGroup(),
+                OffsetDateTime.now(),
+                createEventCommand.deduplicationId(),
+                contextEntities
         );
+        eventRepository.persist(event);
         eventContextRepository.persist(contextEntities);
-        return id;
+        return event.toDto();
     }
 
 }

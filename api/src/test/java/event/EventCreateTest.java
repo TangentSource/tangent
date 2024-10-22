@@ -2,7 +2,6 @@ package event;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import event.application.controllers.EventCreatedDto;
 import event.domain.commands.CreateEventCommand;
 import event.domain.dtos.EventContextDto;
 import event.domain.dtos.EventDto;
@@ -55,20 +54,20 @@ public class EventCreateTest {
                 .statusCode(200)
                 .extract()
                 .response();
-        var dto = response.as(EventCreatedDto.class);
-        assertFalse(dto.id.isEmpty(), "ID should not be empty");
+        var dto = response.as(EventDto.class);
+        assertTrue(dto.id() > 0, "ID should be present");
 
         //lets get it back
         response = given()
                 .when()
-                .get("/event/" + dto.id)
+                .get("/event/" + dto.id())
                 .then()
                 .statusCode(200)
                 .extract()
                 .response();
         var event = response.as(EventDto.class);
-        assertFalse(event.id().isEmpty(), "ID should not be empty");
+        assertTrue(event.id() > 0, "ID should be present");
         assertEquals("test-event", event.type());
-        assertEquals(event.id(), dto.id);
+        assertEquals(event.id(), dto.id());
     }
 }

@@ -33,17 +33,17 @@ public class EventController {
     @Path("/create")
     @RunOnVirtualThread
     @Transactional
-    public EventCreatedDto create(CreateEventCommand createEventCommand) throws ExistsException {
-        return new EventCreatedDto(eventService.create(createEventCommand));
+    public EventDto create(CreateEventCommand createEventCommand) throws ExistsException {
+        return eventService.create(createEventCommand);
     }
 
 
     @GET
+    @RunOnVirtualThread
     @Path("/{id}")
-    public EventDto get(@RestPath String id) {
+    public EventDto get(@RestPath Long id) {
         var event = eventRepository.findById(id);
         return event.toDto();
-
     }
 
     @GET

@@ -10,7 +10,7 @@ import java.util.List;
  */
 @RegisterForReflection
 public record EventDto(
-        String id,
+        Long id,
         String type,
         String specVersion,     //e.g. 1.0
         String source,

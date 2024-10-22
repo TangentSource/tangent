@@ -15,8 +15,8 @@ import java.time.OffsetDateTime;
 public class EventContextEntity extends PanacheEntityBase {
 
         @Id
-        String id;
-        String eventId;
+        Long id;
+        Long eventId;
         String key;
         String value;
         OffsetDateTime createdAt;

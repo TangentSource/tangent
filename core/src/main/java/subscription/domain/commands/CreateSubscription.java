@@ -1,7 +1,6 @@
 package subscription.domain.commands;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
-import subscription.domain.entities.SubscriptionEventTypeEntity;
 import subscription.domain.entities.SubscriptionStatus;
 
 import java.util.List;
@@ -12,7 +11,7 @@ public record CreateSubscription(
         String code,            //unique reference
         String description,
         String module,          //e.g. the application or module subscribing
-        List<SubscriptionEventTypeEntity> eventTypes,
+        List<String> eventTypes,
         SubscriptionStatus status
 ) {
 }
