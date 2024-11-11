@@ -8,7 +8,6 @@ import java.util.List;
 @RegisterForReflection
 public record SubscriptionDto(
         Long id,
-
         String name,
         String code,           //unique reference
         String description,

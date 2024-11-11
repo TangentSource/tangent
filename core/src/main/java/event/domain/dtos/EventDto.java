@@ -20,6 +20,7 @@ public record EventDto(
         String data,
         String messageGroup,
         String deduplicationId,
+        String moduleCode,      //e.g. the application or module emitting the event
         List<EventContextDto> contexts  //Allows attaching context e.g. a Transport Order has a related Sales Order
 
 ) {
