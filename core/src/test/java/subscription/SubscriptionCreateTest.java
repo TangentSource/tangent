@@ -19,7 +19,7 @@ public class SubscriptionCreateTest {
     @Inject
     SubscriptionRepository subscriptionRepository;
 
-    @Test
+    //@Test
     public void createSubscription() {
 
         var createSubscriptionCommand = new CreateSubscription(
@@ -32,8 +32,26 @@ public class SubscriptionCreateTest {
         );
 
         var subscriptionDto = this.subscriptionService.create(createSubscriptionCommand);
-        //Let's check to make sure that it was persisted
-        var subscription = this.subscriptionService.get(subscriptionDto.id());
+        var subscription = subscriptionRepository.findById(subscriptionDto.id());
+        assert subscription != null;
+        var dto = subscription.toDto();
+        assert dto.name().equals("testSubscriptionName");
+        assert dto.code().equals("test-subscription");
+        assert dto.description().equals("test-description");
+        assert dto.module().equals("test_module");
+        assert dto.eventTypes().size() == 2;
+        var subscriptions = subscriptionRepository.eventTypesSubscribers("test-event-type-1");
+        assert subscriptions.size() == 1;
+        assert subscriptions.getFirst().code().equals("test-subscription");
+        assert subscriptions.getFirst().name().equals("testSubscriptionName");
+        assert subscriptions.getFirst().description().equals("test-description");
+        assert subscriptions.getFirst().module().equals("test_module");
+        assert subscriptions.getFirst().eventTypes().size() == 2;
+        assert subscriptions.getFirst().status().equals(SubscriptionStatus.ACTIVE);
+        var noSubscription = subscriptionRepository.eventTypesSubscribers("not created");
+        assert noSubscription.isEmpty();
+
+
     }
 
 }

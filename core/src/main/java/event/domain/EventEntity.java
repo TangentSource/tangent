@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "tangent_events")
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class EventEntity extends PanacheEntityBase {
 
     @Id
@@ -30,6 +30,7 @@ public class EventEntity extends PanacheEntityBase {
     String data;
     String messageGroup;
     OffsetDateTime createdAt;
+    String moduleCode;
     String deduplicationId;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "eventId")
@@ -52,6 +53,7 @@ public class EventEntity extends PanacheEntityBase {
                 data,
                 messageGroup,
                 deduplicationId,
+                moduleCode,
                 contexts
         );
     }

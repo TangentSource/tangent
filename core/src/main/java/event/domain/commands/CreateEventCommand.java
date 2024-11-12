@@ -17,6 +17,7 @@ public record CreateEventCommand(
     String data,
     String messageGroup,
     String deduplicationId,
+    String moduleCode,
     List<EventContextDto> contexts
 ) {
 }

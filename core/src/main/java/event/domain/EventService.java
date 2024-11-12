@@ -61,6 +61,7 @@ public class EventService {
                 createEventCommand.messageGroup(),
                 OffsetDateTime.now(),
                 createEventCommand.deduplicationId(),
+                createEventCommand.moduleCode(),
                 contextEntities
         );
         eventRepository.persist(event);
