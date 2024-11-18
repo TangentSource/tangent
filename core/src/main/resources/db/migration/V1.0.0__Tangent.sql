@@ -10,7 +10,7 @@ CREATE TABLE tangent_events
     data              TEXT,
     message_group     VARCHAR,
     deduplication_id     VARCHAR,
-    module_code       VARCHAR,
+    module_code     VARCHAR,
     created_at TIMESTAMPTZ
 );
 -- PARTITION BY RANGE (created_at);
